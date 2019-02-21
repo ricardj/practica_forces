@@ -23,7 +23,7 @@ void setup(){
 
 void draw(){
   translate(0,SCREEN_HEIGHT);
-  //background(255,255,255);
+  background(255,255,255);
  
   m1.applyForce(gravity);
   m1.update();
