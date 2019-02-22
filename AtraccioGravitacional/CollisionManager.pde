@@ -6,6 +6,9 @@ class CollisionManager{
       collidables = new ArrayList<Mover>();
     }
     
+    
+    
+    
     public void update(){
        //Check if anybody is collided, and if so, activate the collision func
        for(int i = 0; i < collidables.size(); i++){
@@ -14,10 +17,12 @@ class CollisionManager{
             Mover a = collidables.get(i);
             Mover b = collidables.get(j);
             
-            float distance = PVector.sub(a.position,b.position).mag();
+            float distance = abs(a.position.x-b.position.x);
             float radius_sum = a.radius + b.radius;
             
-            if(distance < radius_sum){
+            println(radius_sum);
+            println(distance);
+            if(distance <= radius_sum){
               a.onCollision();
               b.onCollision();
             }

@@ -36,7 +36,9 @@ class Mover{
     
     stroke(5);
     fill (0,0,255);
-    ellipse(position.x, -position.y, radius, radius); 
+    float x = position.x * cos(position.y);
+    float y = position.x * sin(position.y);
+    ellipse(x, -y, radius*2, radius*2); 
     
    }
    

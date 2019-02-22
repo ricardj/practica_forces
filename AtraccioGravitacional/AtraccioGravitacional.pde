@@ -21,6 +21,7 @@ void setup(){
   
   earth = new Earth(new PVector());
   satellite = new Satellite(new PVector(200,0));
+  satellite.speed.y = PI/200;
   
   collisionManager = new CollisionManager();
   collisionManager.addCollidable(earth);
@@ -33,6 +34,7 @@ void setup(){
 
 void draw(){
   translate(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+  background(255);
   
   gravityManager.update();
   
@@ -45,6 +47,7 @@ void draw(){
   satellite.display();
    
   //if satellite is destroyed reset all the elements
+
 }
 
 void reset(){

@@ -21,6 +21,7 @@ class GravityManager{
        //TODO: complete that
        PVector force = new PVector();
        
+       force.x = -(M.mass*m.mass)/sq(m.position.x-M.position.x);
        
        m.applyForce(force);
      }

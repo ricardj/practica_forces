@@ -34,8 +34,12 @@ class Satellite extends Mover{
    
    public void reset(){
      trace = new TracePoint[1];
-     trace[0] = new TracePoint(position);
+     trace[0] = new TracePoint(initialPosition);
     super.reset(); 
+   }
+   
+   public void onCollision(){
+      reset(); 
    }
   
   
