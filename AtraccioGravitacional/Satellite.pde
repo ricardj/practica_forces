@@ -4,7 +4,8 @@ class Satellite extends Mover{
    private float previousTime;
    private float time_offset = 70;
    
-   public Satellite(){
+   public Satellite(PVector initialPosition){
+     super(initialPosition);
     //We initialise the trace
      trace = new TracePoint[1];
      trace[0] = new TracePoint(position);
@@ -23,7 +24,7 @@ class Satellite extends Mover{
    
    public void display(){
      for(int i = 0; i < trace.length; i++) trace[i].display();
-      super.display();
+     super.display();
    }
    
    public void update(){

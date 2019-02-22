@@ -5,18 +5,18 @@ class Mover{
    public PVector acceleration;
    
    public float mass;
-   private float radius;
+   public float radius;
    
-   public PVector initialPosition = new PVector(50,200);
+   public PVector initialPosition;
    
    
-   public Mover(){
+   public Mover(PVector initialPosition){
      this.mass = 1;
      this.radius = 40;
+     this.initialPosition = new PVector().set(initialPosition);
      position = new PVector().set(initialPosition);
      speed = new PVector();
      acceleration = new PVector();
-     
    }
    
    
@@ -46,7 +46,7 @@ class Mover{
      acceleration.set(0,0);
    }
    
-   public void onCollide(){
+   public void onCollision(){
     println("Oh, damn. I've just collided with someone..."); 
    }
   

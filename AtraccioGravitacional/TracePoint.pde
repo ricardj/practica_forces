@@ -1,6 +1,6 @@
 class TracePoint{
   
-    public float tracePoint_radius = 5;
+    public float radius = 5;
     public PVector position;
    
    public TracePoint(PVector position){
@@ -9,8 +9,8 @@ class TracePoint{
    }
    
    public void display(){
-     fill(0,0,0);
-    ellipse(position.x, -position.y,tracePoint_radius,tracePoint_radius); 
+     fill(255,0,0);
+    ellipse(position.x, -position.y,radius,radius); 
    }
   
 }
