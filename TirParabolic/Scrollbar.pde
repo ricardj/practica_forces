@@ -1,4 +1,4 @@
-class HScrollbar {
+class Scrollbar {
   int swidth, sheight;    // width and height of bar
   float xpos, ypos;       // x and y position of bar
   float spos, newspos;    // x position of slider
@@ -8,14 +8,15 @@ class HScrollbar {
   boolean locked;
   float ratio;
 
-  HScrollbar (float xp, float yp, int sw, int sh, int l) {
+  Scrollbar (float xp, float yp, int sw, int sh, int l) {
     swidth = sw;
     sheight = sh;
-    int widthtoheight = sw - sh;
+    //int widthtoheight = sw - sh;
+    int widthtoheight = 1000;
     ratio = (float)sw / (float)widthtoheight;
     xpos = xp;
     ypos = yp-sheight/2;
-    spos = xpos + swidth/2 - sheight/2;
+    spos = xpos ;//+ swidth/2 - sheight/2;
     newspos = spos;
     sposMin = xpos;
     sposMax = xpos + swidth - sheight;
@@ -48,7 +49,7 @@ class HScrollbar {
 
   boolean overEvent() {
     if (mouseX > xpos && mouseX < xpos+swidth &&
-       mouseY > ypos && mouseY < ypos+sheight) {
+       mouseY-SCREEN_HEIGHT > ypos && mouseY-SCREEN_HEIGHT < ypos+sheight) {
       return true;
     } else {
       return false;
@@ -56,7 +57,11 @@ class HScrollbar {
   }
 
   void display() {
+    println((spos-xpos) * ratio);
     noStroke();
+    fill(30);
+    float b = (spos-xpos) * ratio;
+    text( str((int)b) ,xpos,ypos-5);
     fill(204);
     rect(xpos, ypos, swidth, sheight);
     if (over || locked) {
@@ -65,11 +70,13 @@ class HScrollbar {
       fill(102, 102, 102);
     }
     rect(spos, ypos, sheight, sheight);
+    
   }
 
   float getPos() {
+    
     // Convert spos to be values between
-    // 0 and the total width of the scrollbar
-    return spos * ratio;
+    // 0 and 8
+    return (int)((spos-xpos) * ratio);
   }
 }
