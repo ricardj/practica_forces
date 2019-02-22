@@ -1,8 +1,8 @@
 class Earth extends Mover{
-  public Earth(PVector initialPosition){
-    super(initialPosition);
-    radius = 90;
-    mass = 40;
+  public Earth(PVector initialPosition, PVector initialSpeed){
+    super(initialPosition, initialSpeed);
+    radius = 20;
+    mass = 400;
   }
   
   public void display(){

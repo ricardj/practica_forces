@@ -8,14 +8,16 @@ class Mover{
    public float radius;
    
    public PVector initialPosition;
+   public PVector initialSpeed;
    
    
-   public Mover(PVector initialPosition){
+   public Mover(PVector initialPosition,PVector initialSpeed){
      this.mass = 1;
-     this.radius = 40;
+     this.radius = 3;
      this.initialPosition = new PVector().set(initialPosition);
+     this.initialSpeed = new PVector().set(initialSpeed);
      position = new PVector().set(initialPosition);
-     speed = new PVector();
+     speed = new PVector().set(initialSpeed);
      acceleration = new PVector();
    }
    
@@ -25,7 +27,12 @@ class Mover{
    }
    
    public void update(){
-     position.add(speed);
+     //position.add(speed);
+     float x = speed.x * cos(speed.y);
+     float y = speed.x * sin(speed.y);
+     //position.x = 
+     position.y = position.y + speed.y;
+     
      speed.add(acceleration);
      
      //We reset the acceleration
@@ -44,12 +51,13 @@ class Mover{
    
    public void reset(){
      position.set(initialPosition);
-     speed.set(0,0);
+     speed.set(initialSpeed);
      acceleration.set(0,0);
    }
    
    public void onCollision(){
     println("Oh, damn. I've just collided with someone..."); 
    }
+
   
 }

@@ -19,9 +19,7 @@ class CollisionManager{
             
             float distance = abs(a.position.x-b.position.x);
             float radius_sum = a.radius + b.radius;
-            
-            println(radius_sum);
-            println(distance);
+          
             if(distance <= radius_sum){
               a.onCollision();
               b.onCollision();

@@ -4,8 +4,8 @@ class Satellite extends Mover{
    private float previousTime;
    private float time_offset = 70;
    
-   public Satellite(PVector initialPosition){
-     super(initialPosition);
+   public Satellite(PVector initialPosition, PVector initialSpeed){
+     super(initialPosition, initialSpeed);
     //We initialise the trace
      trace = new TracePoint[1];
      trace[0] = new TracePoint(position);
@@ -35,11 +35,11 @@ class Satellite extends Mover{
    public void reset(){
      trace = new TracePoint[1];
      trace[0] = new TracePoint(initialPosition);
-    super.reset(); 
+     super.reset(); 
    }
    
    public void onCollision(){
-      reset(); 
+      reset();
    }
   
   
