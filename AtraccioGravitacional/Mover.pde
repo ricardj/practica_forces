@@ -12,7 +12,7 @@ class Mover{
    
    
    public Mover(PVector initialPosition,PVector initialSpeed){
-     this.mass = 1;
+     this.mass = 200;
      this.radius = 3;
      this.initialPosition = new PVector().set(initialPosition);
      this.initialSpeed = new PVector().set(initialSpeed);
@@ -22,18 +22,15 @@ class Mover{
    }
    
    
-   public void applyForce(PVector force){
-       acceleration.add(PVector.div(force,mass));
+   public void applyForce(PVector polarforce){
+       acceleration.add(PVector.div(polarforce,mass));
    }
    
    public void update(){
-     //position.add(speed);
-     float x = speed.x * cos(speed.y);
-     float y = speed.x * sin(speed.y);
-     //position.x = 
-     position.y = position.y + speed.y;
+     //We convert the position and the speed to cartesian to sum them
      
-     speed.add(acceleration);
+     position.set(cartesian2Polar(PVector.add(polar2Cartesian(position),polar2Cartesian(speed))));
+     speed.set(cartesian2Polar(PVector.add(polar2Cartesian(speed),polar2Cartesian(acceleration))));
      
      //We reset the acceleration
      acceleration.set(0,0);
@@ -58,6 +55,4 @@ class Mover{
    public void onCollision(){
     println("Oh, damn. I've just collided with someone..."); 
    }
-
-  
 }
