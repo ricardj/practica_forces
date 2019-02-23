@@ -12,7 +12,7 @@ class Mover{
    
    
    public Mover(PVector initialPosition,PVector initialSpeed){
-     this.mass = 300;
+     this.mass = 1;
      this.radius = 3;
      this.initialPosition = new PVector().set(initialPosition);
      this.initialSpeed = new PVector().set(initialSpeed);
@@ -24,15 +24,18 @@ class Mover{
    
    public void applyForce(PVector force){
        
-       //acceleration.add(PVector.div(force,mass));
-       acceleration.set(cartesian2Polar(PVector.add(polar2Cartesian(acceleration),PVector.div(force,mass))));
+      acceleration.add(PVector.div(force,mass));
+      //acceleration.set(cartesian2Polar(PVector.add(polar2Cartesian(acceleration),PVector.div(force,mass))));
+      println(cartesian2Polar(PVector.div(force,mass)));
+       //println(acceleration);
    }
    
    public void update(){
      //We convert the position and the speed to cartesian to sum them
-     
-     position.set(cartesian2Polar(PVector.add(polar2Cartesian(position),polar2Cartesian(speed))));
-     speed.set(cartesian2Polar(PVector.add(polar2Cartesian(speed),polar2Cartesian(acceleration))));
+     position.add(speed);
+     speed.add(acceleration);
+     //position.set(cartesian2Polar(PVector.add(polar2Cartesian(position),polar2Cartesian(speed))));
+     //speed.set(cartesian2Polar(PVector.add(polar2Cartesian(speed),polar2Cartesian(acceleration))));
      
      //We reset the acceleration
      acceleration.set(0,0);
@@ -54,6 +57,6 @@ class Mover{
    }
    
    public void onCollision(){
-    println("Oh, damn. I've just collided with someone..."); 
+    //println("Oh, damn. I've just collided with someone..."); 
    }
 }

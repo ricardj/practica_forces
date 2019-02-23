@@ -14,6 +14,7 @@ class Satellite extends Mover{
      super(initialPosition, initialSpeed);
     
      radius = 20;
+     mass = 300;
      
      //We initialise the trace
      trace = new TracePoint[1];
@@ -64,7 +65,7 @@ class Satellite extends Mover{
    }
    
    public void onCollision(){
-     println("Satellite just collided");
+     //println("Satellite just collided");
      exploding = true;
      timeOfExplosion = millis();
    }

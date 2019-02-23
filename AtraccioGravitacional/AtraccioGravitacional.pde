@@ -23,7 +23,6 @@ interface Modes{
 int currentMode = Modes.A;
 
 void setup(){
-  println("Initialising gravitational atraction.");
   
   //Frame settings
   size(200,300);
@@ -36,7 +35,7 @@ void setup(){
   //Intiall position, initial Speed
   //All in polar coordinates
   earth = new Earth(new PVector(), new PVector());
-  satellite = new Satellite(new PVector(100,0),new PVector(1.7, PI/2));
+  satellite = new Satellite(new PVector(200,PI/4),new PVector(0, PI/3));
   
   collisionManager = new CollisionManager();
   collisionManager.addCollidable(earth);
@@ -83,7 +82,6 @@ void drawModeA(){
   if(satellite.exploding){
     float currentTime = millis();
     if(currentTime - satellite.timeOfExplosion > 800){
-          println("Elements reset");
          reset();
     }
   }else{
@@ -122,5 +120,7 @@ public static PVector cartesian2Polar(PVector cartesian){
    PVector polar = new PVector();
    polar.x = cartesian.mag();
    polar.y = atan2(cartesian.y, cartesian.x);
+   if(cartesian.y < 0 && cartesian.x > 0) polar.y = 2*PI-polar.y;
+   if(cartesian.y < 0 && cartesian.x < 0) polar.y += 2*PI;
    return polar;
 }

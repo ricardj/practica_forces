@@ -14,5 +14,4 @@ class TracePoint{
      float y = position.x * sin(position.y);
      ellipse(x, -y,radius*2,radius*2); 
    }
-  
 }

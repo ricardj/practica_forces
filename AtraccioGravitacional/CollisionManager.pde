@@ -2,6 +2,8 @@ class CollisionManager{
     
     public ArrayList<Mover> collidables;  
   
+    private float collisionPadding = 20;
+    
     public CollisionManager(){
       collidables = new ArrayList<Mover>();
     }
@@ -18,6 +20,7 @@ class CollisionManager{
             Mover b = collidables.get(j);
             
             float distance = abs(a.position.x-b.position.x);
+            distance+=collisionPadding;
             float radius_sum = a.radius + b.radius;
           
             if(distance <= radius_sum){
