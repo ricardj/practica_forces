@@ -4,13 +4,20 @@ class Satellite extends Mover{
    private float previousTime;
    private float time_offset = 70;
    
+   private PImage image;
+   
    public Satellite(PVector initialPosition, PVector initialSpeed){
      super(initialPosition, initialSpeed);
-    //We initialise the trace
+    
+     radius = 10;
+     
+     //We initialise the trace
      trace = new TracePoint[1];
      trace[0] = new TracePoint(position);
      previousTime = millis();
-      
+     
+     //We load the image
+     image = loadImage("Satellite.png");
    }
    
    private void setTracePoint(){
@@ -23,8 +30,12 @@ class Satellite extends Mover{
    }
    
    public void display(){
+     //We display the trace
      for(int i = 0; i < trace.length; i++) trace[i].display();
-     super.display();
+     
+     //Then we display the satellite
+     PVector cartesianPosition = polar2Cartesian(position);
+     image(image,cartesianPosition.x-radius, -(cartesianPosition.y-radius), radius*2, radius*2); 
    }
    
    public void update(){

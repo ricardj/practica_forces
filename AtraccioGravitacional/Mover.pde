@@ -12,7 +12,7 @@ class Mover{
    
    
    public Mover(PVector initialPosition,PVector initialSpeed){
-     this.mass = 200;
+     this.mass = 300;
      this.radius = 3;
      this.initialPosition = new PVector().set(initialPosition);
      this.initialSpeed = new PVector().set(initialSpeed);
@@ -22,8 +22,10 @@ class Mover{
    }
    
    
-   public void applyForce(PVector polarforce){
-       acceleration.add(PVector.div(polarforce,mass));
+   public void applyForce(PVector force){
+       
+       //acceleration.add(PVector.div(force,mass));
+       acceleration.set(cartesian2Polar(PVector.add(polar2Cartesian(acceleration),PVector.div(force,mass))));
    }
    
    public void update(){
@@ -40,9 +42,8 @@ class Mover{
     
     stroke(5);
     fill (0,0,255);
-    float x = position.x * cos(position.y);
-    float y = position.x * sin(position.y);
-    ellipse(x, -y, radius*2, radius*2); 
+    PVector cartesianPosition = polar2Cartesian(position);
+    ellipse(cartesianPosition.x, -cartesianPosition.y, radius*2, radius*2); 
     
    }
    
