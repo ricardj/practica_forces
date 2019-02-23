@@ -8,6 +8,10 @@ Satellite satellite;
 CollisionManager collisionManager;
 GravityManager gravityManager;
 
+
+//For time controlling
+float previousTime;
+
 interface Modes{
  int
  A = 0,
@@ -32,7 +36,7 @@ void setup(){
   //Intiall position, initial Speed
   //All in polar coordinates
   earth = new Earth(new PVector(), new PVector());
-  satellite = new Satellite(new PVector(100,0),new PVector(1.5, PI/2));
+  satellite = new Satellite(new PVector(100,0),new PVector(1.7, PI/2));
   
   collisionManager = new CollisionManager();
   collisionManager.addCollidable(earth);
@@ -41,6 +45,7 @@ void setup(){
   gravityManager = new GravityManager();
   gravityManager.addStatic(earth);
   gravityManager.addMobile(satellite);
+  
 }
 
 void draw(){
@@ -73,12 +78,22 @@ void reset(){
 }
 
 void drawModeA(){
-  gravityManager.update();
   
-  earth.update();
-  satellite.update();
   
-  collisionManager.update();
+  if(satellite.exploding){
+    float currentTime = millis();
+    if(currentTime - satellite.timeOfExplosion > 800){
+          println("Elements reset");
+         reset();
+    }
+  }else{
+    gravityManager.update();
+  
+    earth.update();
+    satellite.update();
+  
+    collisionManager.update();
+  }
   
   earth.display();
   satellite.display();

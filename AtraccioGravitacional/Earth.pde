@@ -13,7 +13,7 @@ class Earth extends Mover{
   public void display(){
 
     PVector cartesianPosition = polar2Cartesian(position);
-    image(image,cartesianPosition.x-radius, -(cartesianPosition.y-radius), radius*2, radius*2); 
+    image(image,cartesianPosition.x-radius, -(cartesianPosition.y+radius), radius*2, radius*2); 
   }
   
   public void update(){

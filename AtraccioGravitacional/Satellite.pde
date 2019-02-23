@@ -5,11 +5,15 @@ class Satellite extends Mover{
    private float time_offset = 70;
    
    private PImage image;
+   private PImage explosionImage;
+   
+   public boolean exploding;
+   public float timeOfExplosion;
    
    public Satellite(PVector initialPosition, PVector initialSpeed){
      super(initialPosition, initialSpeed);
     
-     radius = 10;
+     radius = 20;
      
      //We initialise the trace
      trace = new TracePoint[1];
@@ -18,6 +22,10 @@ class Satellite extends Mover{
      
      //We load the image
      image = loadImage("Satellite.png");
+     
+     //We load the explosion thing
+     explosionImage = loadImage("Explosion.png");
+     exploding = false;
    }
    
    private void setTracePoint(){
@@ -35,23 +43,32 @@ class Satellite extends Mover{
      
      //Then we display the satellite
      PVector cartesianPosition = polar2Cartesian(position);
-     image(image,cartesianPosition.x-radius, -(cartesianPosition.y-radius), radius*2, radius*2); 
+     
+     if(!exploding){
+         image(image,cartesianPosition.x-radius, -(cartesianPosition.y+radius), radius*2, radius*2); 
+     }else{
+         image(explosionImage,cartesianPosition.x-radius, -(cartesianPosition.y+radius), radius*2, radius*2); 
+     }
    }
    
    public void update(){
      super.update();
-    setTracePoint();     
+     setTracePoint();   
    }
    
    public void reset(){
      trace = new TracePoint[1];
      trace[0] = new TracePoint(initialPosition);
+     exploding = false;
      super.reset(); 
    }
    
    public void onCollision(){
-      reset();
+     println("Satellite just collided");
+     exploding = true;
+     timeOfExplosion = millis();
    }
-  
+   
+   
   
 }
