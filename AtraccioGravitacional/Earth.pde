@@ -5,15 +5,15 @@ class Earth extends Mover{
   public Earth(PVector initialPosition, PVector initialSpeed){
     super(initialPosition, initialSpeed);
     radius = 30;
-    mass = 400;
+    mass = 20;
     
     image = loadImage("Earth.png");
   }
   
   public void display(){
 
-    PVector cartesianPosition = polar2Cartesian(position);
-    image(image,cartesianPosition.x-radius, -(cartesianPosition.y+radius), radius*2, radius*2); 
+    //PVector cartesianPosition = polar2Cartesian(position);
+    image(image,position.x-radius, -(position.y+radius), radius*2, radius*2); 
   }
   
   public void update(){

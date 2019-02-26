@@ -10,8 +10,6 @@ class TracePoint{
    
    public void display(){
      fill(255,0,0);
-     float x = position.x * cos(position.y);
-     float y = position.x * sin(position.y);
-     ellipse(x, -y,radius*2,radius*2); 
+     ellipse(position.x, -position.y,radius*2,radius*2); 
    }
 }

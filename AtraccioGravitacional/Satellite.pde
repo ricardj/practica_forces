@@ -14,7 +14,7 @@ class Satellite extends Mover{
      super(initialPosition, initialSpeed);
     
      radius = 20;
-     mass = 300;
+     mass = 1;
      
      //We initialise the trace
      trace = new TracePoint[1];
@@ -43,8 +43,8 @@ class Satellite extends Mover{
      for(int i = 0; i < trace.length; i++) trace[i].display();
      
      //Then we display the satellite
-     PVector cartesianPosition = polar2Cartesian(position);
-     
+     //PVector cartesianPosition = polar2Cartesian(position);
+     PVector cartesianPosition = position;
      if(!exploding){
          image(image,cartesianPosition.x-radius, -(cartesianPosition.y+radius), radius*2, radius*2); 
      }else{

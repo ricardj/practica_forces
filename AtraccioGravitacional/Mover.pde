@@ -23,19 +23,13 @@ class Mover{
    
    
    public void applyForce(PVector force){
-       
       acceleration.add(PVector.div(force,mass));
-      //acceleration.set(cartesian2Polar(PVector.add(polar2Cartesian(acceleration),PVector.div(force,mass))));
-      println(cartesian2Polar(PVector.div(force,mass)));
-       //println(acceleration);
    }
    
    public void update(){
      //We convert the position and the speed to cartesian to sum them
      position.add(speed);
      speed.add(acceleration);
-     //position.set(cartesian2Polar(PVector.add(polar2Cartesian(position),polar2Cartesian(speed))));
-     //speed.set(cartesian2Polar(PVector.add(polar2Cartesian(speed),polar2Cartesian(acceleration))));
      
      //We reset the acceleration
      acceleration.set(0,0);
@@ -45,8 +39,8 @@ class Mover{
     
     stroke(5);
     fill (0,0,255);
-    PVector cartesianPosition = polar2Cartesian(position);
-    ellipse(cartesianPosition.x, -cartesianPosition.y, radius*2, radius*2); 
+    //PVector position = polar2Cartesian(position);
+    ellipse(position.x, -position.y, radius*2, radius*2); 
     
    }
    

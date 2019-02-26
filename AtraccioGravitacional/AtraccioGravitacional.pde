@@ -1,12 +1,14 @@
 
 int SCREEN_WIDTH = 800;
-int SCREEN_HEIGHT = 600;
+int SCREEN_HEIGHT = 700;
 
 Earth earth;
 Satellite satellite;
 
 CollisionManager collisionManager;
 GravityManager gravityManager;
+
+Menu menu;
 
 
 //For time controlling
@@ -20,7 +22,7 @@ interface Modes{
  D = 3;
 }
 
-int currentMode = Modes.A;
+int currentOption = Modes.A;
 
 void setup(){
   
@@ -30,12 +32,12 @@ void setup(){
   
   //Render settinf
   background(255,255,255);
-  surface.setLocation(100,100);
+  surface.setLocation(500,0);
   
   //Intiall position, initial Speed
   //All in polar coordinates
   earth = new Earth(new PVector(), new PVector());
-  satellite = new Satellite(new PVector(200,PI/4),new PVector(0, PI/3));
+  satellite = new Satellite(new PVector(200,0),new PVector(0, 2));
   
   collisionManager = new CollisionManager();
   collisionManager.addCollidable(earth);
@@ -45,13 +47,19 @@ void setup(){
   gravityManager.addStatic(earth);
   gravityManager.addMobile(satellite);
   
+  
+  //We set the menu
+  menu = new Menu();
+  
 }
 
 void draw(){
   translate(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
   background(255);
   
-  switch(currentMode){
+  checkChangedMode();
+  
+  switch(menu.currentOption){
    case Modes.A:
      drawModeA();
      break;
@@ -68,6 +76,8 @@ void draw(){
      drawModeD();
      break;
   }
+  menu.update();
+  menu.display();
   
 }
 
@@ -98,15 +108,67 @@ void drawModeA(){
 }
 
 void drawModeB(){
+  if(satellite.exploding){
+    float currentTime = millis();
+    if(currentTime - satellite.timeOfExplosion > 800){
+         reset();
+    }
+  }else{
+    gravityManager.update();
   
+    earth.update();
+    satellite.update();
+  
+    collisionManager.update();
+  }
+  
+  earth.display();
+  satellite.display();
 }
 
 void drawModeC(){
+  if(satellite.exploding){
+    float currentTime = millis();
+    if(currentTime - satellite.timeOfExplosion > 800){
+         reset();
+    }
+  }else{
+    gravityManager.update();
   
+    earth.update();
+    satellite.update();
+  
+    collisionManager.update();
+  }
+  
+  earth.display();
+  satellite.display();
 }
 
 void drawModeD(){
+  if(satellite.exploding){
+    float currentTime = millis();
+    if(currentTime - satellite.timeOfExplosion > 800){
+         reset();
+    }
+  }else{
+    gravityManager.update();
   
+    earth.update();
+    satellite.update();
+  
+    collisionManager.update();
+  }
+  
+  earth.display();
+  satellite.display();
+}
+
+public void checkChangedMode(){
+ if(menu.currentOption != currentOption) {
+   currentOption = menu.currentOption;
+   reset();
+ }
 }
 
 public static PVector polar2Cartesian(PVector polar){

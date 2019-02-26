@@ -19,7 +19,7 @@ class CollisionManager{
             Mover a = collidables.get(i);
             Mover b = collidables.get(j);
             
-            float distance = abs(a.position.x-b.position.x);
+            float distance = PVector.sub(a.position,b.position).mag();
             distance+=collisionPadding;
             float radius_sum = a.radius + b.radius;
           
