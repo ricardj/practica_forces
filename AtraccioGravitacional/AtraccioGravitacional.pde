@@ -37,7 +37,8 @@ void setup(){
   //Intiall position, initial Speed
   //All in polar coordinates
   earth = new Earth(new PVector(), new PVector());
-  satellite = new Satellite(new PVector(200,0),new PVector(0, 6));
+  //325/2
+  satellite = new Satellite(new PVector(200,0),new PVector(0, 0.9));
   
   collisionManager = new CollisionManager();
   collisionManager.addCollidable(earth);
@@ -121,6 +122,7 @@ void drawModeB(){
   
   earth.display();
   satellite.display();
+  satellite.displayOrbitParams();
 }
 
 void drawModeC(){
@@ -140,7 +142,8 @@ void drawModeC(){
   satellite.displayArea2();
   earth.display();
   satellite.display();
-  satellite.displayOrbitParams();
+  satellite.displayAreaCalculus();
+  
 }
 
 void drawModeD(){
@@ -154,7 +157,6 @@ void drawModeD(){
     satellite.updateAnalytic();
     collisionManager.update();
   }
-  satellite.displayAreaCalculus();
   earth.display();
   satellite.display();
 }
@@ -187,8 +189,6 @@ public static PVector cartesian2Polar(PVector cartesian){
    PVector polar = new PVector();
    polar.x = cartesian.mag();
    polar.y = atan2(cartesian.y, cartesian.x);
-   //if(cartesian.y < 0 && cartesian.x > 0) polar.y = 2*PI-polar.y;
-   //if(cartesian.y < 0 && cartesian.x < 0) polar.y += 2*PI;
    return polar;
 }
 

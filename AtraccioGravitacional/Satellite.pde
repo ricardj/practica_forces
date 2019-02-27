@@ -1,5 +1,8 @@
 class Satellite extends Mover{
-   public TracePoint[] trace;
+  
+  public int MAXIMUM_TRACE_SIZE = 200;
+  
+   public ArrayList<TracePoint> trace;
    public ArrayList<TracePoint> area1;
    public ArrayList<TracePoint> area2;
    
@@ -14,8 +17,7 @@ class Satellite extends Mover{
    public float timeOfExplosion;
    
    public float minorAxis = 100;
-   public float majorAxis = 200;
-   
+   public float majorAxis = 100;
    public float eccentricity = 0;
    public float H;
    public float K;
@@ -25,7 +27,7 @@ class Satellite extends Mover{
      super(initialPosition, initialSpeed);
     
      radius = 20;
-     mass = 1;
+     mass = 10;
      
      W = PI/200;
      K = 15;
@@ -33,8 +35,8 @@ class Satellite extends Mover{
      H = W*initialPosition.x*initialPosition.x;
      
      //We initialise the trace
-     trace = new TracePoint[1];
-     trace[0] = new TracePoint(position);
+     trace = new ArrayList<TracePoint>();
+     trace.add(new TracePoint(position));
      previousTime = millis();
      
      //We load the image
@@ -55,7 +57,9 @@ class Satellite extends Mover{
        if(currentTime - previousTime > time_offset){
          previousTime = currentTime;
          TracePoint newTracePoint = new TracePoint(position);
-         trace = (TracePoint[])append(trace,newTracePoint);
+         trace.add(newTracePoint);
+         if(trace.size() > MAXIMUM_TRACE_SIZE) trace.remove(0);
+         
          if(recordFirstArea) area1.add(newTracePoint);
          if(playSecondArea) area2.add(newTracePoint);
        }
@@ -63,7 +67,7 @@ class Satellite extends Mover{
    
    public void display(){
      //We display the trace
-     for(int i = 1; i < trace.length; i++) trace[i].display();
+     for(int i = 1; i < trace.size(); i++) trace.get(i).display();
      
      
      
@@ -99,14 +103,15 @@ class Satellite extends Mover{
    }
    
    public void displayOrbitParams(){
+     stroke(0);
      text("Rmin: " + minorAxis,0,0);
      text("Rmax: " + majorAxis,0,0);
      text("E: "+ eccentricity,0,0);
    }
    public void displayAreaCalculus(){
-      text("Rmin: " + minorAxis,0,0);
-     text("Rmax: " + majorAxis,0,0);
-     text("E: "+ eccentricity,0,0);
+      stroke(0);
+      text("Trapezi Areas: ",0,0);
+      text("Simpson Areas: ",0,0);
    }
    
    public void update(){
@@ -131,8 +136,8 @@ class Satellite extends Mover{
    }
    
    public void reset(){
-     trace = new TracePoint[1];
-     trace[0] = new TracePoint(initialPosition);
+     trace.clear();
+     trace.add(new TracePoint(initialPosition));
      exploding = false;
      area1.clear();
      area2.clear();

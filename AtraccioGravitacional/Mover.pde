@@ -23,16 +23,18 @@ class Mover{
    
    
    public void applyForce(PVector force){
-      acceleration.add(PVector.div(force,mass));
+       PVector accel = PVector.div(force,mass);
+       acceleration.add(accel);
    }
    
    public void update(){
      //We convert the position and the speed to cartesian to sum them
-     position.add(speed);
      speed.add(acceleration);
+     position.add(speed);
+     
      
      //We reset the acceleration
-     acceleration.set(0,0);
+     acceleration.mult(0);
    }
    
    public void display(){
