@@ -37,8 +37,8 @@ void setup(){
   //Intiall position, initial Speed
   //All in polar coordinates
   earth = new Earth(new PVector(), new PVector());
-  //325/2
-  satellite = new Satellite(new PVector(200,0),new PVector(0, 0.9));
+
+  satellite = new Satellite(new PVector(200,0),new PVector(0, 3));
   
   collisionManager = new CollisionManager();
   collisionManager.addCollidable(earth);
@@ -115,8 +115,9 @@ void drawModeB(){
          reset();
     }
   }else{
+    gravityManager.update();
     earth.update();
-    satellite.updateAnalytic();
+    satellite.update();
     collisionManager.update();
   }
   
@@ -132,8 +133,9 @@ void drawModeC(){
          reset();
     }
   }else{
+    gravityManager.update();
     earth.update();
-    satellite.updateAnalytic();
+    satellite.update();
     satellite.updateArea();
     collisionManager.update();
   }
@@ -153,8 +155,11 @@ void drawModeD(){
          reset();
     }
   }else{
+    gravityManager.update();
+    
     earth.update();
-    satellite.updateAnalytic();
+    satellite.update();
+    
     collisionManager.update();
   }
   earth.display();
@@ -166,14 +171,10 @@ public void checkChangedMode(){
    currentOption = menu.currentOption;
    reset();
    if(currentOption == Modes.D){
-     satellite.eccentricity = 0;
-     satellite.K = 15;
-     satellite.W = PI/100;
+     satellite.resetCircularMovement();
    }
    if(currentOption == Modes.B || currentOption == Modes.C){
-     satellite.W = PI/200;
-     satellite.K = 15;
-     satellite.eccentricity = 0.5;
+     satellite.resetOrbitalMovement();
    }
  }
 }

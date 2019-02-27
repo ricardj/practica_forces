@@ -1,27 +1,32 @@
 class Satellite extends Mover{
   
-  public int MAXIMUM_TRACE_SIZE = 200;
+  //Sattellite image
+  private PImage image;
   
+  //Trace for the sattellite
+  public int MAXIMUM_TRACE_SIZE = 300;
    public ArrayList<TracePoint> trace;
-   public ArrayList<TracePoint> area1;
-   public ArrayList<TracePoint> area2;
-   
-   
    private float previousTime;
    private float time_offset = 70;
    
-   private PImage image;
-   private PImage explosionImage;
+   //Attributes for area managing
+   public ArrayList<TracePoint> area1;
+   public ArrayList<TracePoint> area2;
+   public float area1_trapezi;
+   public float area1_sampson;
+   public float area2_trapezi;
+   public float area2_sampson;
    
+   
+   //Esplosion managing and representation
+   private PImage explosionImage;
    public boolean exploding;
    public float timeOfExplosion;
    
-   public float minorAxis = 100;
-   public float majorAxis = 100;
-   public float eccentricity = 0;
-   public float H;
-   public float K;
-   public float W;
+   //Atributes fo Orbit handling
+   public float minorAxis = 80;
+   public float majorAxis = 200;
+   public float eccentricity;
    
    public Satellite(PVector initialPosition, PVector initialSpeed){
      super(initialPosition, initialSpeed);
@@ -29,10 +34,6 @@ class Satellite extends Mover{
      radius = 20;
      mass = 10;
      
-     W = PI/200;
-     K = 15;
-     eccentricity = 0.5;
-     H = W*initialPosition.x*initialPosition.x;
      
      //We initialise the trace
      trace = new ArrayList<TracePoint>();
@@ -49,6 +50,10 @@ class Satellite extends Mover{
      //For area calculating
      area1 = new ArrayList<TracePoint>();
      area2 = new ArrayList<TracePoint>();
+     area1_trapezi = 0;
+     area1_sampson = 0;
+     area2_trapezi = 0;
+     area2_sampson = 0;
      
    }
    
@@ -68,7 +73,6 @@ class Satellite extends Mover{
    public void display(){
      //We display the trace
      for(int i = 1; i < trace.size(); i++) trace.get(i).display();
-     
      
      
      //Then we display the satellite
@@ -103,35 +107,37 @@ class Satellite extends Mover{
    }
    
    public void displayOrbitParams(){
+     textSize(30);
+     float offset = SCREEN_HEIGHT/4;
+     float leftOffset = -SCREEN_WIDTH/2;
+     float padding = 30;
      stroke(0);
-     text("Rmin: " + minorAxis,0,0);
-     text("Rmax: " + majorAxis,0,0);
-     text("E: "+ eccentricity,0,0);
+     fill(0);
+     textAlign(LEFT);
+     text("Rmin: " + minorAxis,leftOffset,offset);
+     text("Rmax: " + majorAxis,leftOffset,offset+padding);
+     text("E: "+ eccentricity,leftOffset,offset+2*padding);
    }
    public void displayAreaCalculus(){
+      textSize(30);
+      float offset = SCREEN_HEIGHT/4;
+      float leftOffset = -SCREEN_WIDTH/2;
+      float padding = 30;
+      float leftPadding = 40;
       stroke(0);
-      text("Trapezi Areas: ",0,0);
-      text("Simpson Areas: ",0,0);
+      fill(0);
+      textAlign(LEFT);
+      stroke(0);
+      text("Trapezi Areas: ",leftOffset,offset);
+      text("Simpson Areas: ",leftOffset+leftPadding,offset);
+      text(area1_trapezi,leftOffset,offset+padding);
+      text(area2_trapezi,leftOffset,offset+padding*2);
+      text(area1_sampson,leftOffset+leftPadding,offset+padding);
+      text(area2_sampson,leftOffset+leftPadding,offset+padding*2);
    }
    
    public void update(){
      super.update();
-     setTracePoint();   
-   }
-   
-   public void updateAnalytic(){
-     PVector polarPosition = AtraccioGravitacional.cartesian2Polar(position);
-     
-     
-     
-     
-     polarPosition.x = 10*K/(1-eccentricity*cos(polarPosition.y));
-     W = H/(polarPosition.x*polarPosition.x);
-     polarPosition.y += W;
-     
-     
-     position = AtraccioGravitacional.polar2Cartesian(polarPosition);
-     
      setTracePoint();
    }
    
@@ -149,6 +155,17 @@ class Satellite extends Mover{
      enterPressed = false;
        
      super.reset(); 
+   }
+   
+   //Reset EXercici D
+   public void resetCircularMovement(){
+     position.set(200,0);
+     speed.set(0,4);
+   }
+   
+   public void resetOrbitalMovement(){
+      position.set(-minorAxis,0);
+      speed.set(0,-sqrt(2*3200*(1/minorAxis-1/(2*majorAxis))));
    }
    
    public void onCollision(){

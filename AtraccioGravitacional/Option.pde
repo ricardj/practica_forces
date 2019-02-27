@@ -19,6 +19,7 @@ class Option{
     else fill(240);
     rect(position.x, position.y, OPTION_WIDTH, OPTION_HEIGHT);
     fill(0);
+    textSize(20);
     textAlign(CENTER,CENTER);
     text(title,position.x+OPTION_WIDTH/2,position.y+OPTION_HEIGHT/2);
   }
