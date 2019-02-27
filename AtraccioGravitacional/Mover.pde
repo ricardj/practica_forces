@@ -48,6 +48,7 @@ class Mover{
      position.set(initialPosition);
      speed.set(initialSpeed);
      acceleration.set(0,0);
+     
    }
    
    public void onCollision(){

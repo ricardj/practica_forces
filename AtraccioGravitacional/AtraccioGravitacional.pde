@@ -37,7 +37,7 @@ void setup(){
   //Intiall position, initial Speed
   //All in polar coordinates
   earth = new Earth(new PVector(), new PVector());
-  satellite = new Satellite(new PVector(200,0),new PVector(0, 2));
+  satellite = new Satellite(new PVector(200,0),new PVector(0, 6));
   
   collisionManager = new CollisionManager();
   collisionManager.addCollidable(earth);
@@ -114,11 +114,8 @@ void drawModeB(){
          reset();
     }
   }else{
-    gravityManager.update();
-  
     earth.update();
-    satellite.update();
-  
+    satellite.updateAnalytic();
     collisionManager.update();
   }
   
@@ -133,16 +130,17 @@ void drawModeC(){
          reset();
     }
   }else{
-    gravityManager.update();
-  
     earth.update();
-    satellite.update();
-  
+    satellite.updateAnalytic();
+    satellite.updateArea();
     collisionManager.update();
   }
   
+  satellite.displayArea1();
+  satellite.displayArea2();
   earth.display();
   satellite.display();
+  satellite.displayOrbitParams();
 }
 
 void drawModeD(){
@@ -152,14 +150,11 @@ void drawModeD(){
          reset();
     }
   }else{
-    gravityManager.update();
-  
     earth.update();
-    satellite.update();
-  
+    satellite.updateAnalytic();
     collisionManager.update();
   }
-  
+  satellite.displayAreaCalculus();
   earth.display();
   satellite.display();
 }
@@ -168,6 +163,16 @@ public void checkChangedMode(){
  if(menu.currentOption != currentOption) {
    currentOption = menu.currentOption;
    reset();
+   if(currentOption == Modes.D){
+     satellite.eccentricity = 0;
+     satellite.K = 15;
+     satellite.W = PI/100;
+   }
+   if(currentOption == Modes.B || currentOption == Modes.C){
+     satellite.W = PI/200;
+     satellite.K = 15;
+     satellite.eccentricity = 0.5;
+   }
  }
 }
 
@@ -182,7 +187,11 @@ public static PVector cartesian2Polar(PVector cartesian){
    PVector polar = new PVector();
    polar.x = cartesian.mag();
    polar.y = atan2(cartesian.y, cartesian.x);
-   if(cartesian.y < 0 && cartesian.x > 0) polar.y = 2*PI-polar.y;
-   if(cartesian.y < 0 && cartesian.x < 0) polar.y += 2*PI;
+   //if(cartesian.y < 0 && cartesian.x > 0) polar.y = 2*PI-polar.y;
+   //if(cartesian.y < 0 && cartesian.x < 0) polar.y += 2*PI;
    return polar;
+}
+
+void keyPressed(){
+  satellite.keyPressed(); 
 }

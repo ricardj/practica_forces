@@ -3,7 +3,7 @@ class GravityManager{
  private ArrayList<Mover> staticMovers;
  private ArrayList<Mover> mobileMovers;
  
- public static final float G = 1;
+ public static final float G = 900;
  
  public GravityManager(){
    //Initialise the arrays  
@@ -19,21 +19,15 @@ class GravityManager{
        Mover M = staticMovers.get(i);
        Mover m = mobileMovers.get(j);
        
-       //Force caused by the M to the m
-       //TODO: complete that
-       
        PVector force = PVector.sub(M.position,m.position);
        float distance = force.mag();
        force.normalize();
 
-       //distance = constrain(distance,15.0,600.0);
-
+       distance = constrain(distance,500,500.0);
+     
        
-       float strength = ((G*M.mass*m.mass)/sq(distance));
+       float strength = ((G*M.mass*m.mass)/(distance*distance));
        force.mult(strength);
-       
-       //PVector r  = PVector.sub(polar2Cartesian(M.position), polar2Cartesian(m.position)).normalize();
-       //force = PVector.mult(r,(M.mass*m.mass)/sq(m.position.x-M.position.x));
        
        m.applyForce(force);
      }
