@@ -30,14 +30,14 @@ void setup(){
   size(200,300);
   surface.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
   
-  //Render settinf
+  //Render settings
   background(255,255,255);
   surface.setLocation(500,0);
   
   //Intiall position, initial Speed
-  //All in polar coordinates
   earth = new Earth(new PVector(), new PVector());
-
+  
+  //Initial conditions for A Mode
   satellite = new Satellite(new PVector(200,0),new PVector(0, 3));
   
   collisionManager = new CollisionManager();

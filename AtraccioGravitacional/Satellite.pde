@@ -18,7 +18,7 @@ class Satellite extends Mover{
    public float area2_sampson;
    
    
-   //Esplosion managing and representation
+   //Explosion managing and representation
    private PImage explosionImage;
    public boolean exploding;
    public float timeOfExplosion;
@@ -29,8 +29,10 @@ class Satellite extends Mover{
    public float eccentricity;
    
    public Satellite(PVector initialPosition, PVector initialSpeed){
+      //We call the mover constructor
      super(initialPosition, initialSpeed);
     
+    //Init settings
      radius = 20;
      mass = 10;
      
@@ -74,20 +76,17 @@ class Satellite extends Mover{
      //We display the trace
      for(int i = 1; i < trace.size(); i++) trace.get(i).display();
      
-     
      //Then we display the satellite
-     //PVector cartesianPosition = polar2Cartesian(position);
-     PVector cartesianPosition = position;
      if(!exploding){
-         image(image,cartesianPosition.x-radius, -(cartesianPosition.y+radius), radius*2, radius*2); 
+         image(image,position.x-radius, -(position.y+radius), radius*2, radius*2); 
      }else{
-         image(explosionImage,cartesianPosition.x-radius, -(cartesianPosition.y+radius), radius*2, radius*2); 
+         image(explosionImage,position.x-radius, -(position.y+radius), radius*2, radius*2); 
      }
      
    }
    
    public void displayArea1(){
-    //We display the lines
+    //We display the lines for area 1
      stroke(255,0,0);
      for(int i = 0; i < area1.size();i++){
        TracePoint tracePoint = area1.get(i);
@@ -97,7 +96,7 @@ class Satellite extends Mover{
    }
    
    public void displayArea2(){
-     //We display the lines
+     //We display the lines for area 2
      stroke(255,0,0);
      for(int i = 0; i < area2.size();i++){
        TracePoint tracePoint = area2.get(i);
@@ -118,12 +117,13 @@ class Satellite extends Mover{
      text("Rmax: " + majorAxis,leftOffset,offset+padding);
      text("E: "+ eccentricity,leftOffset,offset+2*padding);
    }
+   
    public void displayAreaCalculus(){
-      textSize(30);
+      textSize(15);
       float offset = SCREEN_HEIGHT/4;
       float leftOffset = -SCREEN_WIDTH/2;
       float padding = 30;
-      float leftPadding = 40;
+      float leftPadding = 120;
       stroke(0);
       fill(0);
       textAlign(LEFT);
@@ -174,6 +174,8 @@ class Satellite extends Mover{
      timeOfExplosion = millis();
    }
    
+   
+   //For managing Exercici C Input Managinf
    public boolean firstStage = true;
    public boolean secondStage = false;
    public boolean recordFirstArea = false;
@@ -182,9 +184,9 @@ class Satellite extends Mover{
    public void updateArea(){
      if(enterPressed)
      {
-       if(playSecondArea){
-         
-       }   
+         if(playSecondArea){
+           //Todo: complete that
+         }   
          
          if(secondStage)
         {

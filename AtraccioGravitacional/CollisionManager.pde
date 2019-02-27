@@ -9,8 +9,6 @@ class CollisionManager{
     }
     
     
-    
-    
     public void update(){
        //Check if anybody is collided, and if so, activate the collision func
        for(int i = 0; i < collidables.size(); i++){
