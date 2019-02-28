@@ -2,6 +2,11 @@
 int SCREEN_WIDTH = 800;
 int SCREEN_HEIGHT = 700;
 
+
+float INITIAL_POSITION_X = 100;
+float INITIAL_POSITION_Y = 80;
+float INITIAL_MAJOR_AXIS = 200;
+
 Earth earth;
 Satellite satellite;
 
@@ -40,7 +45,11 @@ void setup() {
   //Initial conditions for A Mode
   //Intiall position, initial Speed
   earth = new Earth(new PVector(), new PVector());
-  satellite = new Satellite(new PVector(200, 0), new PVector(0, random(-0.1, 4)));
+  
+  PVector direction = (new PVector(-INITIAL_POSITION_Y, INITIAL_POSITION_X)).normalize();
+  float radius = (new PVector(INITIAL_POSITION_Y, -INITIAL_POSITION_X)).mag();
+  direction.mult(sqrt(2*GravityManager.G*earth.mass*(1/radius-1/(2*INITIAL_MAJOR_AXIS))));
+  satellite = new Satellite(new PVector(INITIAL_POSITION_X, INITIAL_POSITION_Y), direction);
 
   //Gravity and collision managers
   collisionManager = new CollisionManager();

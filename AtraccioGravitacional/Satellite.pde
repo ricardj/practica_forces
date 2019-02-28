@@ -4,7 +4,7 @@ class Satellite extends Mover {
   private PImage image;
 
   //Trace for the sattellite
-  public int MAXIMUM_TRACE_SIZE = 100;
+  public int MAXIMUM_TRACE_SIZE = 150;
   public ArrayList<TracePoint> trace;
   private float previousTime;
   private float time_offset = 70;
@@ -24,7 +24,6 @@ class Satellite extends Mover {
   public float timeOfExplosion;
 
   //Atributes fo Orbit handling
-  public static final int INITIAL_MAJOR_AXIS = 200;
   public float minorAxis;
   public float majorAxis;
   public float eccentricity;
