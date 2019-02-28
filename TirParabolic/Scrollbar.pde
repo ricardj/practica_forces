@@ -57,7 +57,6 @@ class Scrollbar {
   }
 
   void display() {
-    println((spos-xpos) * ratio);
     noStroke();
     fill(30);
     float b = (spos-xpos) * ratio;

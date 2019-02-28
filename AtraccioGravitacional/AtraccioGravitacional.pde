@@ -6,6 +6,8 @@ int SCREEN_HEIGHT = 700;
 float INITIAL_POSITION_X = 100;
 float INITIAL_POSITION_Y = 80;
 float INITIAL_MAJOR_AXIS = 200;
+float INITIAL_SPEED_X = 100;
+float INITIAL_SPEED_Y = 100;
 
 Earth earth;
 Satellite satellite;

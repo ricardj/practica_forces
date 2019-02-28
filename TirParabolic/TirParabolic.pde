@@ -25,6 +25,9 @@ void setup() {
   //Set initial speed
   m1.speed.set(initialSpeed_m1);
   m2.speed.set(initialSpeed_m2);
+  
+  //Set acceleration 
+  m2.acceleration.set(gravity);
 
   m2.moverColor.set(255, 0, 0);
 
@@ -39,7 +42,7 @@ void draw() {
   m1.updateAnalytical();
   m1.display();
 
-  m2.applyForce(gravity);
+
   m2.updateNumerical();
   m2.display();
 
@@ -59,4 +62,5 @@ void resetConditions() {
   m1.speed.set(scrollbarPanel.getSpeedM1());
   m2.reset();
   m2.speed.set(scrollbarPanel.getSpeedM2());
+  m2.acceleration.set(gravity);
 }

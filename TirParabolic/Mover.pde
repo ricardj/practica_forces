@@ -2,6 +2,7 @@ class Mover {
   private float mover_radius = 40;
 
   public PVector initialPosition = new PVector(50, 200);
+  public float acumulatedTime = 0;
 
   public PVector position;
   public PVector speed;
@@ -45,16 +46,20 @@ class Mover {
   }
 
   public void updateNumerical() {
+    
+    float x = initialPosition.x + speed.x*acumulatedTime;
+    float y = initialPosition.y + speed.y*acumulatedTime + (1.0/2.0)*acceleration.y*sq(acumulatedTime);
+    position.set(x,y);
 
-    position.x = position.x + speed.x;
-    position.y = position.y + speed.y + 1/2*acceleration.y;
-
-    speed.x = speed.x;
-    speed.y = speed.y + acceleration.y;
-
-    //We reset the acceleration
-    acceleration.set(0, 0);
-
+    acumulatedTime += (frameRate/60);
+    
+    println();
+    println(initialPosition.y + speed.y*acumulatedTime + acceleration.y*sq(acumulatedTime));
+    println(position.y);
+    println(acumulatedTime);
+    println(acceleration.y);
+    println(acceleration.y*sq(acumulatedTime));
+    
     setTracePoint();
   }
 
@@ -82,5 +87,6 @@ class Mover {
     acceleration.set(0, 0);
     trace = new TracePoint[1];
     trace[0] = new TracePoint(position);
+    acumulatedTime = 0;
   }
 }
