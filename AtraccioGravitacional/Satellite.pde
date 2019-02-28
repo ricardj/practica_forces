@@ -4,7 +4,7 @@ class Satellite extends Mover{
   private PImage image;
   
   //Trace for the sattellite
-  public int MAXIMUM_TRACE_SIZE = 300;
+  public int MAXIMUM_TRACE_SIZE = 100;
    public ArrayList<TracePoint> trace;
    private float previousTime;
    private float time_offset = 70;
@@ -99,7 +99,7 @@ class Satellite extends Mover{
    
    public void displayArea2(){
      //We display the lines for area 2
-     stroke(255,0,0);
+     stroke(0,255,0);
      for(int i = 0; i < area2.size();i++){
        TracePoint tracePoint = area2.get(i);
        line(0,0,tracePoint.position.x,-tracePoint.position.y);
@@ -142,10 +142,8 @@ class Satellite extends Mover{
      if(position.mag() >= majorAxis)
      majorAxis = (int)((GravityManager.G*earth.mass*position.mag())/(2*GravityManager.G*earth.mass-position.mag()*speed.magSq()));
      
-     if(abs(cartesian2Polar(position).y) == PI && position.mag() < majorAxis){
-       focus = majorAxis - cartesian2Polar(position).x;
-       println("Focus calculated");
-     }
+     if(abs(cartesian2Polar(position).y) == PI && position.mag() < majorAxis)
+     focus = majorAxis - cartesian2Polar(position).x;
      
      eccentricity = focus/majorAxis;
      
@@ -164,9 +162,14 @@ class Satellite extends Mover{
      
      firstStage = true;
      secondStage = false;
+     resetStage = false;
      recordFirstArea = false;
      playSecondArea = false;
      enterPressed = false;
+     firstAreaStartTime = 0;
+     firstAreaTotalTime =0;
+     secondAreaStartTime = 0;
+     secondAreaTotalTime =0;
        
      super.reset(); 
    }
@@ -191,34 +194,61 @@ class Satellite extends Mover{
    }
    
    
-   //For managing Exercici C Input Managinf
+   //For managing Exercici C Input Managing
    public boolean firstStage = true;
+   public boolean resetStage = false;
    public boolean secondStage = false;
    public boolean recordFirstArea = false;
    public boolean playSecondArea = false;
    public boolean enterPressed = false;
+   public float firstAreaStartTime = 0;
+   public float firstAreaTotalTime =0;
+   public float secondAreaStartTime = 0;
+   public float secondAreaTotalTime =0;
+   
    public void updateArea(){
+     if(playSecondArea){
+           secondAreaTotalTime = millis() - secondAreaStartTime;
+           if(secondAreaTotalTime >= firstAreaTotalTime){
+             playSecondArea = false;
+             resetStage = true;
+             calculateArea2();
+           }
+        }
+        
      if(enterPressed)
-     {
-         if(playSecondArea){
-           //Todo: complete that
-         }   
+     {   
          
          if(secondStage)
         {
            secondStage = false;
            playSecondArea = true;
+           secondAreaStartTime = millis();
         }
          if(recordFirstArea)
         {
            recordFirstArea = false;
+           firstAreaTotalTime = millis() - firstAreaStartTime;
+           calculateArea1();
            secondStage = true;
         }
         if(firstStage)
         {
            recordFirstArea = true;
+           firstAreaStartTime = millis();
            firstStage = false;
         }
+        if(resetStage){
+           area1.clear();
+           area2.clear();
+           firstStage = true;
+           resetStage = false;
+           area1_trapezi = 0;
+           area1_sampson = 0;
+           area2_trapezi = 0;
+           area2_sampson = 0;
+         }
+        
        }
      
      enterPressed = false;
@@ -229,6 +259,26 @@ class Satellite extends Mover{
       if(keyCode == ENTER){
         enterPressed = true;
       }
+   }
+   
+   public void calculateArea1(){
+     area1_trapezi = calculateTrapeziArea(area1);
+     area1_sampson = calculateSimpsonArea(area1);
+   }
+   
+   public void calculateArea2(){
+     area2_trapezi = calculateTrapeziArea(area2);
+     area2_sampson = calculateSimpsonArea(area2);
+   }
+   
+   public float calculateSimpsonArea(ArrayList<TracePoint> function){
+     //Todo: complete this function
+     return 40;
+   }
+   
+   public float calculateTrapeziArea(ArrayList<TracePoint> function){
+     //TOD: complete this function 
+     return 50; 
    }
   
 }

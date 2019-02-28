@@ -40,7 +40,7 @@ void setup(){
   //Initial conditions for A Mode
   //Intiall position, initial Speed
   earth = new Earth(new PVector(), new PVector());
-  satellite = new Satellite(new PVector(200,0),new PVector(0, 3));
+  satellite = new Satellite(new PVector(200,0),new PVector(0, random(-0.1,4)));
   
   //Gravity and collision managers
   collisionManager = new CollisionManager();
@@ -93,7 +93,9 @@ void reset(){
 }
 
 void drawModeA(){
-  
+  textSize(50);
+  fill(150);
+  text("Exercici A",-SCREEN_WIDTH/2+140,-SCREEN_HEIGHT/2+30);
   
   if(satellite.exploding){
     float currentTime = millis();
@@ -114,6 +116,10 @@ void drawModeA(){
 }
 
 void drawModeB(){
+  textSize(50);
+  fill(150);
+  text("Exercici B",-SCREEN_WIDTH/2+140,-SCREEN_HEIGHT/2+30);
+  
   if(satellite.exploding){
     float currentTime = millis();
     if(currentTime - satellite.timeOfExplosion > 800){
@@ -132,6 +138,10 @@ void drawModeB(){
 }
 
 void drawModeC(){
+  textSize(50);
+  fill(150);
+  text("Exercici C",-SCREEN_WIDTH/2+140,-SCREEN_HEIGHT/2+30);
+  
   if(satellite.exploding){
     float currentTime = millis();
     if(currentTime - satellite.timeOfExplosion > 800){
@@ -154,6 +164,10 @@ void drawModeC(){
 }
 
 void drawModeD(){
+  textSize(50);
+  fill(150);
+  text("Exercici D",-SCREEN_WIDTH/2+140,-SCREEN_HEIGHT/2+30);
+  
   if(satellite.exploding){
     float currentTime = millis();
     if(currentTime - satellite.timeOfExplosion > 800){
