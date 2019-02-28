@@ -10,9 +10,11 @@ GravityManager gravityManager;
 
 Menu menu;
 
-
 //For time controlling
 float previousTime;
+
+//Background image
+PImage backgroundImage;
 
 interface Modes{
  int
@@ -33,13 +35,14 @@ void setup(){
   //Render settings
   background(255,255,255);
   surface.setLocation(500,0);
-  
-  //Intiall position, initial Speed
-  earth = new Earth(new PVector(), new PVector());
+  backgroundImage = loadImage("Space.png");
   
   //Initial conditions for A Mode
+  //Intiall position, initial Speed
+  earth = new Earth(new PVector(), new PVector());
   satellite = new Satellite(new PVector(200,0),new PVector(0, 3));
   
+  //Gravity and collision managers
   collisionManager = new CollisionManager();
   collisionManager.addCollidable(earth);
   collisionManager.addCollidable(satellite);
@@ -55,8 +58,10 @@ void setup(){
 }
 
 void draw(){
+  //image(backgroundImage,0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+  background(0,4,42);
   translate(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
-  background(255);
+  
   
   checkChangedMode();
   

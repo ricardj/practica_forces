@@ -24,7 +24,7 @@ class Menu{
   
   public void display(){
     translate(-SCREEN_WIDTH/2,-SCREEN_HEIGHT/2);
-    fill(230);
+    fill(140);
     rect(0,SCREEN_HEIGHT-MENU_HEIGHT, SCREEN_WIDTH,MENU_HEIGHT);
     for(int i = 0; i < options.length; i++) options[i].display();
   }

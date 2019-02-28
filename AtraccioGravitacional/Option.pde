@@ -15,7 +15,7 @@ class Option{
   }
   
   public void display(){
-    if(mouseOver) fill(210);
+    if(mouseOver) fill(150);
     else fill(240);
     rect(position.x, position.y, OPTION_WIDTH, OPTION_HEIGHT);
     fill(0);

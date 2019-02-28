@@ -24,9 +24,11 @@ class Satellite extends Mover{
    public float timeOfExplosion;
    
    //Atributes fo Orbit handling
-   public float minorAxis = 80;
-   public float majorAxis = 200;
+   public static final int INITIAL_MAJOR_AXIS = 200;
+   public float minorAxis;
+   public float majorAxis;
    public float eccentricity;
+   public float focus;
    
    public Satellite(PVector initialPosition, PVector initialSpeed){
       //We call the mover constructor
@@ -111,7 +113,7 @@ class Satellite extends Mover{
      float leftOffset = -SCREEN_WIDTH/2;
      float padding = 30;
      stroke(0);
-     fill(0);
+     fill(127.5);
      textAlign(LEFT);
      text("Rmin: " + minorAxis,leftOffset,offset);
      text("Rmax: " + majorAxis,leftOffset,offset+padding);
@@ -125,7 +127,7 @@ class Satellite extends Mover{
       float padding = 30;
       float leftPadding = 120;
       stroke(0);
-      fill(0);
+      fill(127.5);
       textAlign(LEFT);
       stroke(0);
       text("Trapezi Areas: ",leftOffset,offset);
@@ -137,6 +139,18 @@ class Satellite extends Mover{
    }
    
    public void update(){
+     if(position.mag() >= majorAxis)
+     majorAxis = (int)((GravityManager.G*earth.mass*position.mag())/(2*GravityManager.G*earth.mass-position.mag()*speed.magSq()));
+     
+     if(abs(cartesian2Polar(position).y) == PI && position.mag() < majorAxis){
+       focus = majorAxis - cartesian2Polar(position).x;
+       println("Focus calculated");
+     }
+     
+     eccentricity = focus/majorAxis;
+     
+     minorAxis = majorAxis * sqrt(1-sq(eccentricity));
+     
      super.update();
      setTracePoint();
    }
@@ -164,8 +178,10 @@ class Satellite extends Mover{
    }
    
    public void resetOrbitalMovement(){
-      position.set(-minorAxis,0);
-      speed.set(0,-sqrt(2*3200*(1/minorAxis-1/(2*majorAxis))));
+      majorAxis = INITIAL_MAJOR_AXIS;
+      float startingRadius = majorAxis/random(1,3);
+      position.set(-startingRadius,0);
+      speed.set(0,-sqrt(2*earth.mass*(1/startingRadius-1/(2*majorAxis))));
    }
    
    public void onCollision(){
