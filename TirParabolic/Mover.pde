@@ -53,13 +53,6 @@ class Mover {
 
     acumulatedTime += (frameRate/60);
     
-    println();
-    println(initialPosition.y + speed.y*acumulatedTime + acceleration.y*sq(acumulatedTime));
-    println(position.y);
-    println(acumulatedTime);
-    println(acceleration.y);
-    println(acceleration.y*sq(acumulatedTime));
-    
     setTracePoint();
   }
 
