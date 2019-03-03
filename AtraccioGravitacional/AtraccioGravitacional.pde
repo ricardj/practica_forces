@@ -191,7 +191,7 @@ void drawModeD() {
 }
 
 public void checkChangedMode() {
-  if (menu.currentOption != currentOption) {
+  if (menu.currentOption != currentOption || menu.optionClicked()) {
     currentOption = menu.currentOption;
     reset();
     if (currentOption == Modes.D) {
