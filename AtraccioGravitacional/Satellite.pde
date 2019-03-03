@@ -28,6 +28,7 @@ class Satellite extends Mover {
   public float majorAxis;
   public float eccentricity;
   public float focus;
+  public float fartherPosition;
 
   public Satellite(PVector initialPosition, PVector initialSpeed) {
     //We call the mover constructor
@@ -136,12 +137,16 @@ class Satellite extends Mover {
   }
 
   public void update() {
-    if (position.mag() >= majorAxis)
+    if (position.mag() - focus >= majorAxis){
       majorAxis = (int)((GravityManager.G*earth.mass*position.mag())/(2*GravityManager.G*earth.mass-position.mag()*speed.magSq()));
+    }
 
-    if (abs(cartesian2Polar(position).y) == PI && position.mag() < majorAxis)
-      focus = majorAxis - cartesian2Polar(position).x;
-
+    //if (abs(cartesian2Polar(position).y) == PI && position.mag() < majorAxis)
+    if (position.mag() > fartherPosition) {
+      fartherPosition = position.mag();
+      focus = fartherPosition - (new PVector(INITIAL_POSITION_X, INITIAL_POSITION_Y).mag());
+    }
+    
     eccentricity = focus/majorAxis;
 
     minorAxis = majorAxis * sqrt(1-sq(eccentricity));
@@ -173,15 +178,24 @@ class Satellite extends Mover {
 
   //Reset EXercici D
   public void resetCircularMovement() {
-    position.set(200, 0);
-    speed.set(0, 4);
+    PVector circularSpeed = (new PVector(-INITIAL_POSITION_Y, INITIAL_POSITION_X)).normalize();
+    float radius = (new PVector(INITIAL_POSITION_Y, -INITIAL_POSITION_X)).mag();
+    circularSpeed.mult(sqrt(GravityManager.G*earth.mass*(1/radius)));
+    speed.set(circularSpeed);
   }
 
+  //Reset for ExerciciB and ExerciciC
   public void resetOrbitalMovement() {
     majorAxis = INITIAL_MAJOR_AXIS;
-    float startingRadius = majorAxis/random(1, 3);
-    position.set(-startingRadius, 0);
-    speed.set(0, -sqrt(2*earth.mass*(1/startingRadius-1/(2*majorAxis))));
+
+
+    float startingRadius = (new PVector(INITIAL_POSITION_X, INITIAL_POSITION_Y)).mag();
+    position.set(INITIAL_POSITION_X, INITIAL_POSITION_Y);
+    speed.set(-INITIAL_POSITION_Y, INITIAL_POSITION_X);
+    speed.normalize();
+    speed.mult(sqrt(2*earth.mass*(1/startingRadius-1/(2*majorAxis))));
+
+    fartherPosition = startingRadius;
   }
 
   public void onCollision() {
