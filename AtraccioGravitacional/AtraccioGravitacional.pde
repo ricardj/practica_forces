@@ -4,9 +4,11 @@ int SCREEN_HEIGHT = 700;
 
 //PLAYABLE_CODE_AREA
 
-float INITIAL_POSITION_X = 40;
+//Variables for all exercicis
+float INITIAL_POSITION_X = 200;
 float INITIAL_POSITION_Y = 40;
-float INITIAL_MAJOR_AXIS = 100;
+float INITIAL_MAJOR_AXIS = 150;
+float EARTH_MASS = 3200;
 
 //Just for EXERCICI A
 float INITIAL_SPEED_X = 0;
@@ -21,6 +23,7 @@ CollisionManager collisionManager;
 GravityManager gravityManager;
 
 Menu menu;
+ScrollbarPanel scrollbarPanel;
 
 //For time controlling
 float previousTime;
@@ -70,6 +73,9 @@ void setup() {
 
   //We set the menu
   menu = new Menu();
+  
+  //We set the scrollbarPanel
+  scrollbarPanel = new ScrollbarPanel();
 }
 
 void draw() {
@@ -97,6 +103,8 @@ void draw() {
     drawModeD();
     break;
   }
+  scrollbarPanel.update();
+  scrollbarPanel.display();
   menu.update();
   menu.display();
 }

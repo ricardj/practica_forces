@@ -5,7 +5,7 @@ class Earth extends Mover {
   public Earth(PVector initialPosition, PVector initialSpeed) {
     super(initialPosition, initialSpeed);
     radius = 30;
-    mass = 3200;
+    mass = EARTH_MASS;
 
     image = loadImage("Earth.png");
   }
