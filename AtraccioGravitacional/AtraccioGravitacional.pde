@@ -89,14 +89,20 @@ void draw() {
   switch(menu.currentOption) {
   case Modes.A:
     drawModeA();
+    scrollbarPanel.updateExercisiA();
+    scrollbarPanel.displayExercisiA();
     break;
 
   case Modes.B:
     drawModeB();
+    scrollbarPanel.updateMajorAxis();
+    scrollbarPanel.displayMajorAxis();
     break;
 
   case Modes.C:
     drawModeC();
+    scrollbarPanel.updateMajorAxis();
+    scrollbarPanel.displayMajorAxis();
     break;
 
   case Modes.D:

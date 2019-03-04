@@ -181,6 +181,7 @@ class Satellite extends Mover {
     super.reset();
     
     position.set(INITIAL_POSITION_X,INITIAL_POSITION_Y);
+    speed.set(INITIAL_SPEED_X,INITIAL_SPEED_Y);
     
   }
 
