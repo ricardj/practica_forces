@@ -293,13 +293,51 @@ class Satellite extends Mover {
     area2_sampson = calculateSimpsonArea(area2);
   }
 
-  public float calculateSimpsonArea(ArrayList<TracePoint> function) {
+   public float calculateTrapeziArea(ArrayList<TracePoint> function) {
     //Todo: complete this function
-    return 40;
+    PVector xa = cartesian2Polar(function.get(0).position);
+    PVector xb = cartesian2Polar(function.get(function.size()-1).position);
+    
+    if(xa.y < 0)xa.y = 2*PI + xa.y;
+    if(xb.y < 0)xb.y = 2*PI + xb.y;
+    if(xa.y > xb.y)xb.y = 2*PI + xb.y; 
+    
+    float a  = xa.y;
+    float b = xb.y;
+    float fa = sq(xa.x)/2;  
+    float fb = sq(xb.x)/2;
+    
+    
+    
+    println("angle a = " + a);
+    println("angle b = " + b);
+    println("modul a = " + fa);
+    println("modul b = " + fb);
+    println("");
+    
+    float area = ((fa + fb)/2)*(b-a);
+    return area;
   }
 
-  public float calculateTrapeziArea(ArrayList<TracePoint> function) {
-    //TOD: complete this function 
-    return 50;
+  public float calculateSimpsonArea(ArrayList<TracePoint> function) {
+    //TODO: complete this function 
+ 
+    PVector xa = cartesian2Polar(function.get(0).position);
+    PVector xb = cartesian2Polar(function.get(function.size()-1).position);
+    
+    if(xa.y < 0)xa.y = 2*PI + xa.y;
+    if(xb.y < 0)xb.y = 2*PI + xb.y;
+    if(xa.y > xb.y)xb.y = 2*PI + xb.y; 
+    
+    float a  = xa.y;
+    float b = xb.y;
+    float fa = sq(xa.x)/2;
+    float fb = sq(xb.x)/2;
+     
+    float fab2 = sq((function.get(round(function.size()/2)).position).mag())/2;
+
+  
+    float area = ((b-a)/6)*(fa + 4*fab2 + fb);
+    return area;
   }
 }
