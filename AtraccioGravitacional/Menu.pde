@@ -4,7 +4,7 @@ class Menu {
   private Option[] options;
 
   public int currentOption = 0;
-  
+
   private boolean optionClicked = false;
 
   public Menu() {
@@ -33,16 +33,16 @@ class Menu {
   public void update() {
     for (int i = 0; i < options.length; i++) {
       options[i].update();
-      if (mousePressed && options[i].mouseOver){
+      if (mousePressed && options[i].mouseOver) {
         currentOption = i;
         optionClicked = true;
       }
     }
   }
-  
-  public boolean optionClicked(){
+
+  public boolean optionClicked() {
     boolean toReturn = optionClicked;
-    if(optionClicked) optionClicked = false;
+    if (optionClicked) optionClicked = false;
     return toReturn;
   }
 }

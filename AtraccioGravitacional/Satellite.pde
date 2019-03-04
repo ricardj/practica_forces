@@ -140,10 +140,10 @@ class Satellite extends Mover {
   //222
   //182
   public void update() {
-   /* if (position.mag() - focus >= majorAxis){
-      //majorAxis = (int)((GravityManager.G*earth.mass*position.mag())/(2*GravityManager.G*earth.mass-position.mag()*speed.magSq()));
-      majorAxis = position.mag() - focus;
-    }*/
+    /* if (position.mag() - focus >= majorAxis){
+     //majorAxis = (int)((GravityManager.G*earth.mass*position.mag())/(2*GravityManager.G*earth.mass-position.mag()*speed.magSq()));
+     majorAxis = position.mag() - focus;
+     }*/
 
     //if (abs(cartesian2Polar(position).y) == PI && position.mag() < majorAxis)
     if (position.mag() > fartherPosition) {
@@ -151,7 +151,7 @@ class Satellite extends Mover {
       //focus = fartherPosition - (new PVector(INITIAL_POSITION_X, INITIAL_POSITION_Y).mag());
       focus = fartherPosition-majorAxis;
     }
-    
+
     eccentricity = abs(focus/majorAxis);
 
     minorAxis = majorAxis * sqrt(1-sq(eccentricity));
@@ -179,10 +179,9 @@ class Satellite extends Mover {
     secondAreaTotalTime =0;
 
     super.reset();
-    
-    position.set(INITIAL_POSITION_X,INITIAL_POSITION_Y);
-    speed.set(INITIAL_SPEED_X,INITIAL_SPEED_Y);
-    
+
+    position.set(INITIAL_POSITION_X, INITIAL_POSITION_Y);
+    speed.set(INITIAL_SPEED_X, INITIAL_SPEED_Y);
   }
 
   //Reset EXercici D

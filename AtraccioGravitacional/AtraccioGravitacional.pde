@@ -59,7 +59,7 @@ void setup() {
   PVector direction = (new PVector(-INITIAL_POSITION_Y, INITIAL_POSITION_X)).normalize();
   float radius = (new PVector(INITIAL_POSITION_Y, -INITIAL_POSITION_X)).mag();
   direction.mult(sqrt(2*GravityManager.G*earth.mass*(1/radius-1/(2*INITIAL_MAJOR_AXIS))));
-  satellite = new Satellite(new PVector(INITIAL_POSITION_X, INITIAL_POSITION_Y), new PVector(INITIAL_SPEED_X,INITIAL_SPEED_Y));
+  satellite = new Satellite(new PVector(INITIAL_POSITION_X, INITIAL_POSITION_Y), new PVector(INITIAL_SPEED_X, INITIAL_SPEED_Y));
 
   //Gravity and collision managers
   collisionManager = new CollisionManager();
@@ -73,7 +73,7 @@ void setup() {
 
   //We set the menu
   menu = new Menu();
-  
+
   //We set the scrollbarPanel
   scrollbarPanel = new ScrollbarPanel();
 }
@@ -82,7 +82,6 @@ void draw() {
   //image(backgroundImage,0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
   background(0, 4, 42);
   translate(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-
 
   checkChangedMode();
 
