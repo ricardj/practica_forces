@@ -1,8 +1,8 @@
 class CollisionManager {
 
-  public ArrayList<Mover> collidables;  
+  public ArrayList<Mover> collidables;      //Array that includes all the elements that can collide   
 
-  private float collisionPadding = 20;
+  private float collisionPadding = 20;      //Little offset for better collision detection
 
   public CollisionManager() {
     collidables = new ArrayList<Mover>();
@@ -10,7 +10,7 @@ class CollisionManager {
 
 
   public void update() {
-    //Check if anybody is collided, and if so, activate the collision func
+    //Check if anybody is collided, and if so, activate the collision function
     for (int i = 0; i < collidables.size(); i++) {
       for (int j = i+1; j < collidables.size(); j++) {
         //Check collision
@@ -29,8 +29,8 @@ class CollisionManager {
     }
   }
 
+  //Append the collidable to the array
   public void addCollidable(Mover newCollidable) {
-    //Append the collidable to the array
     collidables.add(newCollidable);
   }
 }

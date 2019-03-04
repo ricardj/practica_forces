@@ -3,9 +3,9 @@ class Menu {
   public int MENU_HEIGHT = 100;
   private Option[] options;
 
-  public int currentOption = 0;
-
-  private boolean optionClicked = false;
+  public int currentOption = 0;                //Current selected option
+  
+  private boolean optionClicked = false;       //Check if an option has been clicked
 
   public Menu() {
     options = new Option[4];
@@ -15,8 +15,8 @@ class Menu {
     options[Modes.D] = new Option("Exercici D");
 
     float cellWidth = SCREEN_WIDTH / options.length;
-    float cellHeight = MENU_HEIGHT; 
 
+    //Sets the position of all the options of the menu
     for (int i = 0; i < options.length; i++) {
       options[i].position.set(cellWidth*i+(cellWidth-Option.OPTION_WIDTH)/2
         , (SCREEN_HEIGHT-MENU_HEIGHT/2)-(Option.OPTION_HEIGHT)/2);

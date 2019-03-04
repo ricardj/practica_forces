@@ -1,7 +1,7 @@
 class GravityManager {
 
-  private ArrayList<Mover> staticMovers;
-  private ArrayList<Mover> mobileMovers;
+  private ArrayList<Mover> staticMovers;      //The static movers atract the mobile movers
+  private ArrayList<Mover> mobileMovers;      //Movers atracted bu the static movers
 
   public static final float G = 1;
 

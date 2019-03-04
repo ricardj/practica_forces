@@ -2,6 +2,13 @@
 int SCREEN_WIDTH = 800;
 int SCREEN_HEIGHT = 700;
 
+/*
+You can change the values of the variables inside the PLAYABLE_CODE_AREA.
+But you have to take on account that after first iteration they will take the slider values.
+
+In order to deactivate the sliders, comment all the lines where the sliderPanel appears on this class.
+*/
+
 //PLAYABLE_CODE_AREA
 
 //Variables for all exercicis
@@ -31,6 +38,7 @@ float previousTime;
 //Background image
 PImage backgroundImage;
 
+//For choosing between simulations
 interface Modes {
   int
     A = 0, 
@@ -41,6 +49,8 @@ interface Modes {
 
 int currentOption = Modes.A;
 
+
+
 void setup() {
 
   //Frame settings
@@ -50,15 +60,10 @@ void setup() {
   //Render settings
   background(255, 255, 255);
   surface.setLocation(500, 0);
-  backgroundImage = loadImage("Space.png");
 
   //Initial conditions for A Mode
   //Intiall position, initial Speed
   earth = new Earth(new PVector(), new PVector());
-
-  PVector direction = (new PVector(-INITIAL_POSITION_Y, INITIAL_POSITION_X)).normalize();
-  float radius = (new PVector(INITIAL_POSITION_Y, -INITIAL_POSITION_X)).mag();
-  direction.mult(sqrt(2*GravityManager.G*earth.mass*(1/radius-1/(2*INITIAL_MAJOR_AXIS))));
   satellite = new Satellite(new PVector(INITIAL_POSITION_X, INITIAL_POSITION_Y), new PVector(INITIAL_SPEED_X, INITIAL_SPEED_Y));
 
   //Gravity and collision managers
@@ -79,7 +84,7 @@ void setup() {
 }
 
 void draw() {
-  //image(backgroundImage,0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+  
   background(0, 4, 42);
   translate(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 
@@ -203,6 +208,7 @@ void drawModeD() {
   satellite.display();
 }
 
+//Checks if the user has changedd between modes in order to reset the simulations
 public void checkChangedMode() {
   if (menu.currentOption != currentOption || menu.optionClicked()) {
     currentOption = menu.currentOption;
@@ -230,10 +236,12 @@ public static PVector cartesian2Polar(PVector cartesian) {
   return polar;
 }
 
+//Warns the other classes that an other key has been pressed
 void keyPressed() {
   satellite.keyPressed();
 }
 
+//Displays an upper left title depending on the simulation.
 void displayTitle(String title) {
   textSize(50);
   fill(150);

@@ -60,6 +60,7 @@ class Satellite extends Mover {
     area2_sampson = 0;
   }
 
+  //Adds a trace point on a fixed time interval
   private void setTracePoint() {
     float currentTime  = millis();
     if (currentTime - previousTime > time_offset) {
@@ -105,6 +106,7 @@ class Satellite extends Mover {
     stroke(0);
   }
 
+  //Displays the orbit params just needed on simulation B
   public void displayOrbitParams() {
     textSize(30);
     float offset = SCREEN_HEIGHT/4;
@@ -118,6 +120,7 @@ class Satellite extends Mover {
     text("E: "+ eccentricity, leftOffset, offset+2*padding);
   }
 
+  //DIsplay the area calulations just needed on siulation C
   public void displayAreaCalculus() {
     textSize(15);
     float offset = SCREEN_HEIGHT/4;
@@ -136,30 +139,23 @@ class Satellite extends Mover {
     text(area2_sampson, leftOffset+leftPadding, offset+padding*2);
   }
 
-  //162
-  //222
-  //182
+  
   public void update() {
-    /* if (position.mag() - focus >= majorAxis){
-     //majorAxis = (int)((GravityManager.G*earth.mass*position.mag())/(2*GravityManager.G*earth.mass-position.mag()*speed.magSq()));
-     majorAxis = position.mag() - focus;
-     }*/
 
-    //if (abs(cartesian2Polar(position).y) == PI && position.mag() < majorAxis)
+    //We calculate the orbit propieties
     if (position.mag() > fartherPosition) {
       fartherPosition = position.mag();
-      //focus = fartherPosition - (new PVector(INITIAL_POSITION_X, INITIAL_POSITION_Y).mag());
       focus = fartherPosition-majorAxis;
     }
-
     eccentricity = abs(focus/majorAxis);
-
     minorAxis = majorAxis * sqrt(1-sq(eccentricity));
 
+    //We update the object as a mover and then wwe add a trace point
     super.update();
     setTracePoint();
   }
 
+  //Reset the basic operations
   public void reset() {
     trace.clear();
     trace.add(new TracePoint(initialPosition));
@@ -174,9 +170,9 @@ class Satellite extends Mover {
     playSecondArea = false;
     enterPressed = false;
     firstAreaStartTime = 0;
-    firstAreaTotalTime =0;
+    firstAreaTotalTime = 0;
     secondAreaStartTime = 0;
-    secondAreaTotalTime =0;
+    secondAreaTotalTime = 0;
 
     super.reset();
 
@@ -283,6 +279,7 @@ class Satellite extends Mover {
     }
   }
 
+  //Methods for area calculations
   public void calculateArea1() {
     area1_trapezi = calculateTrapeziArea(area1);
     area1_sampson = calculateSimpsonArea(area1);
@@ -293,50 +290,42 @@ class Satellite extends Mover {
     area2_sampson = calculateSimpsonArea(area2);
   }
 
-   public float calculateTrapeziArea(ArrayList<TracePoint> function) {
-    //Todo: complete this function
+  public float calculateTrapeziArea(ArrayList<TracePoint> function) {
+
+    //We are going to make the calculations on polar coordinates.
     PVector xa = cartesian2Polar(function.get(0).position);
     PVector xb = cartesian2Polar(function.get(function.size()-1).position);
-    
-    if(xa.y < 0)xa.y = 2*PI + xa.y;
-    if(xb.y < 0)xb.y = 2*PI + xb.y;
-    if(xa.y > xb.y)xb.y = 2*PI + xb.y; 
-    
+
+    if (xa.y < 0)xa.y = 2*PI + xa.y;
+    if (xb.y < 0)xb.y = 2*PI + xb.y;
+    if (xa.y > xb.y)xb.y = 2*PI + xb.y; 
+
     float a  = xa.y;
     float b = xb.y;
-    float fa = sq(xa.x)/2;  
-    float fb = sq(xb.x)/2;
-    
-    
-    
-    println("angle a = " + a);
-    println("angle b = " + b);
-    println("modul a = " + fa);
-    println("modul b = " + fb);
-    println("");
-    
+    float fa = sq(xa.x)/2;    //We square and divide by two the modules because we are working with polar coordinates
+    float fb = sq(xb.x)/2;    //We square and divide by two the modules because we are working with polar coordinates
+
     float area = ((fa + fb)/2)*(b-a);
     return area;
   }
 
   public float calculateSimpsonArea(ArrayList<TracePoint> function) {
-    //TODO: complete this function 
- 
+
+    //We are going to make the calculations on polar coordinates.
     PVector xa = cartesian2Polar(function.get(0).position);
     PVector xb = cartesian2Polar(function.get(function.size()-1).position);
-    
-    if(xa.y < 0)xa.y = 2*PI + xa.y;
-    if(xb.y < 0)xb.y = 2*PI + xb.y;
-    if(xa.y > xb.y)xb.y = 2*PI + xb.y; 
-    
+
+    if (xa.y < 0)xa.y = 2*PI + xa.y;
+    if (xb.y < 0)xb.y = 2*PI + xb.y;
+    if (xa.y > xb.y)xb.y = 2*PI + xb.y; 
+
     float a  = xa.y;
     float b = xb.y;
-    float fa = sq(xa.x)/2;
-    float fb = sq(xb.x)/2;
-     
+    float fa = sq(xa.x)/2;      //We square and divide by two the modules because we are working with polar coordinates
+    float fb = sq(xb.x)/2;      //We square and divide by two the modules because we are working with polar coordinates
+
     float fab2 = sq((function.get(round(function.size()/2)).position).mag())/2;
 
-  
     float area = ((b-a)/6)*(fa + 4*fab2 + fb);
     return area;
   }
